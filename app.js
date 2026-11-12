@@ -18,11 +18,12 @@
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(wpisy){
       wpisy.forEach(function(w){
-        if(w.isIntersecting){linki.forEach(function(a){a.classList.toggle('akt',a.getAttribute('href')==='#'+w.target.id)})}
+        if(!w.isIntersecting)return;
+        var id=w.target.id;
+        linki.forEach(function(a){a.classList.toggle('akt',a.getAttribute('href')==='#'+id)});
       });
     },{rootMargin:'-45% 0px -50% 0px'});
-    sekcje.forEach(function(s){io.observe(s)});
-    new IntersectionObserver(function(w){if(w[0].isIntersecting)linki.forEach(function(a){a.classList.remove('akt')})},{rootMargin:'-45% 0px -50% 0px'}).observe(document.getElementById('start'));
+    [document.getElementById('start')].concat(sekcje).forEach(function(s){io.observe(s)});
   }
 
   // karuzela: palec natywnie, mysz przeciąganiem, strzałki
